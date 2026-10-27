@@ -1,0 +1,8 @@
+-- Copy to sql/config.sql (not in git) and adapt. Read by the other scripts with @@config.sql.
+-- URL of Ollama as seen FROM THE DATABASE (inside Docker Compose: the service name).
+define ollama_url = 'http://ollama:11434'
+-- Host and port allowed by the network ACL (must match the URL above)
+define ollama_host = 'ollama'
+define ollama_port = 11434
+-- Embedding model pulled in Ollama (bge-m3: multilingual, 1024 dimensions)
+define embed_model = 'bge-m3'

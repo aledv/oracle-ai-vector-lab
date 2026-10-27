@@ -1,0 +1,28 @@
+# Oracle Database Free (23ai/26ai, with AI Vector Search) + Ollama for the embeddings.
+#   cp .env.example .env && docker compose up -d
+#   docker compose exec ollama ollama pull bge-m3
+services:
+  oracle:
+    image: gvenzl/oracle-free:23-slim     # pin a tag@sha256 for anything long-lived
+    container_name: oracle-lab-db
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD}
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  ollama:
+    image: ollama/ollama:latest           # pin a tag@sha256 for anything long-lived
+    container_name: oracle-lab-ollama
+    volumes:
+      - ollama-data:/root/.ollama
+
+volumes:
+  oracle-data:
+  ollama-data:
